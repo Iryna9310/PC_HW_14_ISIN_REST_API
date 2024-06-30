@@ -38,7 +38,7 @@ def get_db():
 
 # Ініціалізація Redis
 async def startup():
-    redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
+    redis_url = os.getenv("REDIS_URL", "redis://redis:6379")
     redis = await aioredis.from_url(redis_url, encoding="utf-8")
     await FastAPILimiter.init(redis)
     app.state.redis = redis
@@ -228,9 +228,8 @@ def verify_email(token: str, db: Session = Depends(get_db)):
     """
     email = utils.verify_email_token(token)
     if email is None:
-        raise HTTPException(status_code=400, detail="Invalid or expired token")
-    crud.verify_user_email(db, email=email)
-    return {"message": "Email verified successfully"}
+        raise HTTPException
+
 
 
 

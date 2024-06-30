@@ -23,7 +23,7 @@ class User(UserBase):
     avatar_url: Optional[str] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True  # Замість orm_mode
 
 class ContactBase(BaseModel):
     """
@@ -56,7 +56,7 @@ class Contact(ContactBase):
     owner_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True  # Замість orm_mode
 
 class Token(BaseModel):
     """
@@ -70,6 +70,7 @@ class TokenData(BaseModel):
     Token data model schema.
     """
     email: Optional[str] = None
+
 
 
 
